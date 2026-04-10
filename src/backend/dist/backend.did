@@ -1,0 +1,120 @@
+type UserRole = 
+ variant {
+   faculty;
+   student;
+ };
+type User = 
+ record {
+   createdAt: int;
+   email: text;
+   id: nat;
+   name: text;
+   password: text;
+   role: UserRole;
+ };
+type Resource = 
+ record {
+   courseId: nat;
+   createdAt: int;
+   id: nat;
+   title: text;
+   "type": text;
+   uploadedBy: nat;
+   url: text;
+ };
+type QuizResult = 
+ record {
+   id: nat;
+   quizId: nat;
+   score: nat;
+   submittedAt: int;
+   total: nat;
+   userId: nat;
+ };
+type QuizQuestion = 
+ record {
+   correctIndex: nat;
+   options: vec text;
+   "text": text;
+ };
+type Quiz = 
+ record {
+   courseId: nat;
+   createdAt: int;
+   id: nat;
+   questions: vec QuizQuestion;
+   title: text;
+ };
+type Notification = 
+ record {
+   createdAt: int;
+   id: nat;
+   isRead: bool;
+   message: text;
+   "type": text;
+   userId: nat;
+ };
+type Course = 
+ record {
+   createdAt: int;
+   description: text;
+   facultyId: nat;
+   id: nat;
+   title: text;
+ };
+type AssignmentSubmission = 
+ record {
+   assignmentId: nat;
+   content: text;
+   id: nat;
+   submittedAt: int;
+   userId: nat;
+ };
+type Assignment = 
+ record {
+   courseId: nat;
+   createdAt: int;
+   description: text;
+   dueDate: text;
+   id: nat;
+   title: text;
+ };
+service : {
+  addAssignment: (title: text, courseId: nat, dueDate: text, description:
+   text) -> (nat);
+  addCourse: (title: text, description: text, facultyId: nat) -> (nat);
+  addNotification: (userId: nat, message: text, "type": text) -> (nat);
+  addQuiz: (title: text, courseId: nat, questions: vec QuizQuestion) -> (nat);
+  addResource: (title: text, "type": text, courseId: nat, url: text,
+   uploadedBy: nat) -> (nat);
+  getAllUsers: () -> (vec User) query;
+  getAssignmentSubmissions: () -> (vec AssignmentSubmission) query;
+  getAssignments: () -> (vec Assignment) query;
+  getAssignmentsByCourse: (courseId: nat) -> (vec Assignment) query;
+  getCourse: (id: nat) -> (opt Course) query;
+  getCourses: () -> (vec Course) query;
+  getNotifications: (userId: nat) -> (vec Notification) query;
+  getQuizResults: () -> (vec QuizResult) query;
+  getQuizResultsByUser: (userId: nat) -> (vec QuizResult) query;
+  getQuizzes: () -> (vec Quiz) query;
+  getQuizzesByCourse: (courseId: nat) -> (vec Quiz) query;
+  getResources: () -> (vec Resource) query;
+  getResourcesByCourse: (courseId: nat) -> (vec Resource) query;
+  getStudentCount: () -> (nat) query;
+  getSubmissionsByUser: (userId: nat) -> (vec AssignmentSubmission) query;
+  getUser: (id: nat) -> (opt User) query;
+  login: (email: text, password: text) ->
+   (variant {
+      err: text;
+      ok: User;
+    }) query;
+  markNotificationRead: (id: nat) -> (bool);
+  register: (email: text, password: text, role: UserRole, name: text) ->
+   (variant {
+      err: text;
+      ok: nat;
+    });
+  submitAssignment: (userId: nat, assignmentId: nat, content: text) -> (nat);
+  submitQuizResult: (userId: nat, quizId: nat, score: nat, total: nat) ->
+   (nat);
+}

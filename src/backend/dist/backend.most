@@ -1,0 +1,135 @@
+// Version: 1.0.0
+type AssignmentSubmission__16365222 =
+  {
+    assignmentId : Nat;
+    content : Text;
+    id : Nat;
+    submittedAt : Int;
+    userId : Nat
+  };
+type Assignment__702522088 =
+  {
+    courseId : Nat;
+    createdAt : Int;
+    description : Text;
+    dueDate : Text;
+    id : Nat;
+    title : Text
+  };
+type Course__388460598 =
+  {
+    createdAt : Int;
+    description : Text;
+    facultyId : Nat;
+    id : Nat;
+    title : Text
+  };
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Notification__879889657 =
+  {
+    createdAt : Int;
+    id : Nat;
+    isRead : Bool;
+    message : Text;
+    type_ : Text;
+    userId : Nat
+  };
+type QuizQuestion__253667764 =
+  {correctIndex : Nat; options : [Text]; text : Text};
+type QuizResult__71023913 =
+  {
+    id : Nat;
+    quizId : Nat;
+    score : Nat;
+    submittedAt : Int;
+    total : Nat;
+    userId : Nat
+  };
+type Quiz__699127777 =
+  {
+    courseId : Nat;
+    createdAt : Int;
+    id : Nat;
+    questions : [QuizQuestion__253667764];
+    title : Text
+  };
+type Resource__760893119 =
+  {
+    courseId : Nat;
+    createdAt : Int;
+    id : Nat;
+    title : Text;
+    type_ : Text;
+    uploadedBy : Nat;
+    url : Text
+  };
+type UserRole__599675725 = {#faculty; #student};
+type User__831686142 =
+  {
+    createdAt : Int;
+    email : Text;
+    id : Nat;
+    name : Text;
+    password : Text;
+    role : UserRole__599675725
+  };
+actor {
+  stable assignmentSubmissions :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?AssignmentSubmission__16365222]];
+      var elementIndex : Nat__490723111
+    };
+  stable assignments :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Assignment__702522088]];
+      var elementIndex : Nat__490723111
+    };
+  stable courses :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Course__388460598]];
+      var elementIndex : Nat__490723111
+    };
+  stable var nextAssignmentId : Nat;
+  stable var nextCourseId : Nat;
+  stable var nextNotifId : Nat;
+  stable var nextQuizId : Nat;
+  stable var nextQuizResultId : Nat;
+  stable var nextResourceId : Nat;
+  stable var nextSubmissionId : Nat;
+  stable var nextUserId : Nat;
+  stable notifications :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Notification__879889657]];
+      var elementIndex : Nat__490723111
+    };
+  stable quizResults :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?QuizResult__71023913]];
+      var elementIndex : Nat__490723111
+    };
+  stable quizzes :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Quiz__699127777]];
+      var elementIndex : Nat__490723111
+    };
+  stable resources :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Resource__760893119]];
+      var elementIndex : Nat__490723111
+    };
+  stable var seeded : Bool;
+  stable users :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?User__831686142]];
+      var elementIndex : Nat__490723111
+    }
+};
